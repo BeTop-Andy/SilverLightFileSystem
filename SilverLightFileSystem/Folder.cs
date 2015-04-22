@@ -33,7 +33,7 @@ namespace SilverLightFileSystem
 
 		public override string ToString()
 		{
-			return Prefix + Di.Name;
+			return Prefix == "." ? "." : Prefix + Di.Name;
 		}
 	}
 }
