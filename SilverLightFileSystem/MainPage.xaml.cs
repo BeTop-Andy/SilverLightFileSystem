@@ -42,6 +42,22 @@ namespace SilverLightFileSystem
 			{
 				txt_PathTextBox.Text = ofd.File.DirectoryName;
 				txt_PathTextBox.Tag = ofd.File;
+
+
+				l.Clear();
+				l.Add(new Folder(".", ofd.File.Directory));
+
+				GetAllDir(ofd.File.Directory, 0);
+
+				IEnumerable<FileInfo> files = ofd.File.Directory.EnumerateFiles();
+
+				lst_File.Items.Clear();
+
+				foreach (FileInfo i in files)
+				{
+					lst_File.Items.Add(i.Name);
+				}
+				//lst_Folder.ItemsSource = l;
 			}
 			else
 			{
