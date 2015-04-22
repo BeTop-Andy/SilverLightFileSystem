@@ -14,7 +14,7 @@ namespace SilverLightFileSystem
 {
 	public class Folder
 	{
-		public DirectoryInfo Di
+		public DirectoryInfo DirInfo
 		{
 			get;
 			set;
@@ -27,13 +27,13 @@ namespace SilverLightFileSystem
 
 		public Folder(string pre, DirectoryInfo di)
 		{
-			Di = di;
+			DirInfo = di;
 			Prefix = pre;
 		}
 
 		public override string ToString()
 		{
-			return Prefix == "." ? "." : Prefix + Di.Name;
+			return Prefix == "." ? "." : Prefix + DirInfo.Name;
 		}
 	}
 }

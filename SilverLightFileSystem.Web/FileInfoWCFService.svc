@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="SilverLightFileSystem.Web.FileInfoWCFService" CodeBehind="FileInfoWCFService.svc.cs" %>

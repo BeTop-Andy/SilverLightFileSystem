@@ -1,0 +1,17 @@
+﻿<configuration>
+    <system.serviceModel>
+        <bindings>
+            <customBinding>
+                <binding name="CustomBinding_FileInfoWCFService">
+                    <binaryMessageEncoding />
+                    <httpTransport maxReceivedMessageSize="2147483647" maxBufferSize="2147483647" />
+                </binding>
+            </customBinding>
+        </bindings>
+        <client>
+            <endpoint address="../FileInfoWCFService.svc" binding="customBinding"
+                bindingConfiguration="CustomBinding_FileInfoWCFService" contract="FileInfoWCFServiceReference.FileInfoWCFService"
+                name="CustomBinding_FileInfoWCFService" />
+        </client>
+    </system.serviceModel>
+</configuration>

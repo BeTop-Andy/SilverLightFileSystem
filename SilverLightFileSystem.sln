@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SilverLightFileSystem", "SilverLightFileSystem\SilverLightFileSystem.csproj", "{898B35C3-B219-4636-8A48-72AD239267F6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0E40B801-9F2F-403D-9DEB-CA91CEDF9672} = {0E40B801-9F2F-403D-9DEB-CA91CEDF9672}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SilverLightFileSystem.Web", "SilverLightFileSystem.Web\SilverLightFileSystem.Web.csproj", "{0E40B801-9F2F-403D-9DEB-CA91CEDF9672}"
 EndProject

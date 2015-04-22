@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="/Imports">
+      <xsd:import schemaLocation="http://localhost:58068/FileInfoWCFService.svc?xsd=xsd0" />
+      <xsd:import schemaLocation="http://localhost:58068/FileInfoWCFService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:58068/FileInfoWCFService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/System.IO" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="FileInfoWCFService_DoWork_InputMessage">
+    <wsdl:part name="parameters" element="DoWork" />
+  </wsdl:message>
+  <wsdl:message name="FileInfoWCFService_DoWork_OutputMessage">
+    <wsdl:part name="parameters" element="DoWorkResponse" />
+  </wsdl:message>
+  <wsdl:message name="FileInfoWCFService_Test_InputMessage">
+    <wsdl:part name="parameters" element="Test" />
+  </wsdl:message>
+  <wsdl:message name="FileInfoWCFService_Test_OutputMessage">
+    <wsdl:part name="parameters" element="TestResponse" />
+  </wsdl:message>
+  <wsdl:message name="FileInfoWCFService_AddFileToDB_InputMessage">
+    <wsdl:part name="parameters" element="AddFileToDB" />
+  </wsdl:message>
+  <wsdl:message name="FileInfoWCFService_AddFileToDB_OutputMessage">
+    <wsdl:part name="parameters" element="AddFileToDBResponse" />
+  </wsdl:message>
+  <wsdl:message name="FileInfoWCFService_AddDirToDB_InputMessage">
+    <wsdl:part name="parameters" element="AddDirToDB" />
+  </wsdl:message>
+  <wsdl:message name="FileInfoWCFService_AddDirToDB_OutputMessage">
+    <wsdl:part name="parameters" element="AddDirToDBResponse" />
+  </wsdl:message>
+  <wsdl:portType name="FileInfoWCFService">
+    <wsdl:operation name="DoWork">
+      <wsdl:input wsaw:Action="urn:FileInfoWCFService/DoWork" message="FileInfoWCFService_DoWork_InputMessage" />
+      <wsdl:output wsaw:Action="urn:FileInfoWCFService/DoWorkResponse" message="FileInfoWCFService_DoWork_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Test">
+      <wsdl:input wsaw:Action="urn:FileInfoWCFService/Test" message="FileInfoWCFService_Test_InputMessage" />
+      <wsdl:output wsaw:Action="urn:FileInfoWCFService/TestResponse" message="FileInfoWCFService_Test_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddFileToDB">
+      <wsdl:input wsaw:Action="urn:FileInfoWCFService/AddFileToDB" message="FileInfoWCFService_AddFileToDB_InputMessage" />
+      <wsdl:output wsaw:Action="urn:FileInfoWCFService/AddFileToDBResponse" message="FileInfoWCFService_AddFileToDB_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddDirToDB">
+      <wsdl:input wsaw:Action="urn:FileInfoWCFService/AddDirToDB" message="FileInfoWCFService_AddDirToDB_InputMessage" />
+      <wsdl:output wsaw:Action="urn:FileInfoWCFService/AddDirToDBResponse" message="FileInfoWCFService_AddDirToDB_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

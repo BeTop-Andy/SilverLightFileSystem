@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Windows;
@@ -10,26 +11,29 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using System.IO;
+using SilverLightFileSystem.FileInfoWCFServiceReference;
 
 namespace SilverLightFileSystem
 {
 	public partial class MainPage : UserControl
 	{
+		ObservableCollection<Folder> folders;
+		FileInfoWCFServiceClient webClient;
+		int id = 100;
 
-		ObservableCollection<Folder> l;
 		public MainPage()
 		{
 			InitializeComponent();
-			l = new ObservableCollection<Folder>();
-			lst_Folder.ItemsSource = l;
+			folders = new ObservableCollection<Folder>();
+			lst_Folder.ItemsSource = folders;
+
+			webClient = new FileInfoWCFServiceClient();
 		}
 
 		private void btn_Browse_Click(object sender, RoutedEventArgs e)
 		{
 			lst_File.Items.Clear();
-			//lst_Folder.Items.Clear();
-			l.Clear();
+			folders.Clear();
 			txt_PathTextBox.Text = "";
 			txt_PathTextBox.Tag = null;
 
@@ -44,10 +48,12 @@ namespace SilverLightFileSystem
 				txt_PathTextBox.Tag = ofd.File;
 
 
-				l.Clear();
-				l.Add(new Folder(".", ofd.File.Directory));
+				folders.Clear();
+				folders.Add(new Folder(".", ofd.File.Directory));
 
 				GetAllDir(ofd.File.Directory, 0);
+				AddDirToDB(ofd.File.Directory,null);
+
 
 				IEnumerable<FileInfo> files = ofd.File.Directory.EnumerateFiles();
 
@@ -57,7 +63,9 @@ namespace SilverLightFileSystem
 				{
 					lst_File.Items.Add(i.Name);
 				}
-				//lst_Folder.ItemsSource = l;
+
+				//webClient.TestCompleted += new EventHandler<TestCompletedEventArgs>(test);
+
 			}
 			else
 			{
@@ -65,6 +73,7 @@ namespace SilverLightFileSystem
 			}
 		}
 
+		/*
 		private void btn_Clear_Click(object sender, RoutedEventArgs e)
 		{
 			txt_PathTextBox.Text = "";
@@ -81,8 +90,8 @@ namespace SilverLightFileSystem
 				//lst_Folder.Items.Clear();
 				//lst_Folder.Items.Add(".");
 
-				l.Clear();
-				l.Add(new Folder(".", fi.Directory));
+				folders.Clear();
+				folders.Add(new Folder(".", fi.Directory));
 
 				GetAllDir(fi.Directory, 0);
 
@@ -94,13 +103,14 @@ namespace SilverLightFileSystem
 				{
 					lst_File.Items.Add(i.Name);
 				}
-				lst_Folder.ItemsSource = l;
+				lst_Folder.ItemsSource = folders;
 			}
 			catch
 			{
 				MessageBox.Show("请先选择文件");
 			}
 		}
+		*/
 
 		private void GetAllDir(DirectoryInfo dir, int level)
 		{
@@ -114,26 +124,31 @@ namespace SilverLightFileSystem
 
 			foreach (DirectoryInfo di in dirs)
 			{
-				//lst_Folder.Items.Add(str + di);
-				l.Add(new Folder(str,di));
+				folders.Add(new Folder(str,di));
 				GetAllDir(di, level + 1);
 			}
 
 		}
 
+		private void AddDirToDB(DirectoryInfo dir, int? pid)
+		{
+			IEnumerable<DirectoryInfo> dirs = dir.EnumerateDirectories();
+
+			foreach (DirectoryInfo di in dirs)
+			{
+				webClient.AddDirToDBAsync(id, pid, di.Name, di.CreationTime);
+				AddDirToDB(di, id);
+			}
+		}
+
 
 		private void lst_Folder_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			FileInfo fi = (FileInfo) txt_PathTextBox.Tag;
-
-			//IEnumerable<DirectoryInfo> dirs = fi.Directory.EnumerateDirectories();
-
 			int index = lst_Folder.SelectedIndex;
-
 
 			if (index >= 0)
 			{
-				DirectoryInfo di = l[index].Di;
+				DirectoryInfo di = folders[index].DirInfo;
 				IEnumerable<FileInfo> files = di.EnumerateFiles();
 
 				lst_File.Items.Clear();
@@ -143,5 +158,11 @@ namespace SilverLightFileSystem
 				}
 			}
 		}
+
+		private void test(object sender, TestCompletedEventArgs e)
+		{
+			MessageBox.Show(e.Result.ToString());
+		}
+
 	}
 }
