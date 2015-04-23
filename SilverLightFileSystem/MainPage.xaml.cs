@@ -16,7 +16,7 @@ namespace SilverLightFileSystem
 		FileInfoWCFServiceClient webClient;				//调用数据库的“引用”
 		ObservableCollection<string> extensions;		//后缀名的集合
 
-		int id = -100;									//数据库中的Id
+		int id = 0;										//数据库中的Id
 
 		public MainPage()
 		{

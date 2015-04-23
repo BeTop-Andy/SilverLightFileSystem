@@ -119,9 +119,6 @@
     <None Include="Service References\FileInfoWCFServiceReference\FileInfoWCFService1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\FileInfoWCFServiceReference\FileInfoWCFService2.xsd">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\DataSources\MainPage.datasource" />
