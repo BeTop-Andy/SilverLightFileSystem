@@ -57,8 +57,8 @@ namespace SilverLightFileSystem
 		{
 			lst_File.Items.Clear();
 			folders.Clear();
-			txt_PathTextBox.Text = "";
-			txt_PathTextBox.Tag = null;
+			txt_Path.Text = "";
+			txt_Path.Tag = null;
 
 			OpenFileDialog ofd = new OpenFileDialog();
 			ofd.Multiselect = false;
@@ -67,8 +67,8 @@ namespace SilverLightFileSystem
 
 			if (result.HasValue && result.Value)
 			{
-				txt_PathTextBox.Text = ofd.File.DirectoryName;
-				txt_PathTextBox.Tag = ofd.File;
+				txt_Path.Text = ofd.File.DirectoryName;
+				txt_Path.Tag = ofd.File;
 
 
 				folders.Clear();
@@ -228,7 +228,7 @@ namespace SilverLightFileSystem
 
 		private void ddlst_Extension_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			DirectoryInfo dir = folders[lst_Folder.SelectedIndex].DirInfo;
+			DirectoryInfo dir = folders[lst_Folder.SelectedIndex < 0 ? 0 : lst_Folder.SelectedIndex].DirInfo;
 			IEnumerable<FileInfo> files = dir.EnumerateFiles();
 			lst_File.Items.Clear();
 
@@ -252,6 +252,42 @@ namespace SilverLightFileSystem
 					}
 				}
 			}
+		}
+
+		private void btn_Search_Click(object sender, RoutedEventArgs e)
+		{
+			string keyword = txt_Search.Text.ToLower();
+			if (keyword != null)
+			{
+				DirectoryInfo dir = folders[lst_Folder.SelectedIndex < 0 ? 0 : lst_Folder.SelectedIndex].DirInfo;
+				IEnumerable<FileInfo> files = dir.EnumerateFiles();
+				lst_File.Items.Clear();
+
+				foreach (var i in files)
+				{
+					if (i.Name.ToLower().Contains(keyword))
+					{
+						lst_File.Items.Add(i.Name);
+					}
+				}
+			}
+			else
+			{
+				ddlst_Extension.SelectedIndex = 0;
+			}
+		}
+
+		private void txt_Search_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.Key == Key.Enter)
+			{
+				btn_Search_Click(null, null);
+			}
+		}
+
+		private void txt_Search_TextChanged(object sender, TextChangedEventArgs e)
+		{
+			btn_Search_Click(null, null);
 		}
 	}
 }
