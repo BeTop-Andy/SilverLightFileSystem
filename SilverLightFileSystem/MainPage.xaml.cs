@@ -64,7 +64,6 @@ namespace SilverLightFileSystem
 				txt_Path.Text = ofd.File.DirectoryName;
 				txt_Path.Tag = ofd.File;
 
-
 				folders.Clear();
 				folders.Add(new Folder(".", ofd.File.Directory));
 
@@ -87,11 +86,21 @@ namespace SilverLightFileSystem
 
 				id++;		//为了分隔开
 				webClient.SetStartIdAsync(id);
+				SetEnabled(true);
 			}
 			else
 			{
 				MessageBox.Show("取消选择");
+				SetEnabled(false);
 			}
+		}
+
+		private void SetEnabled(bool b)
+		{
+
+			txt_Search.IsEnabled = b;
+			btn_Search.IsEnabled = b;
+			ddlst_Extension.IsEnabled = b;
 		}
 
 		/*

@@ -20,9 +20,9 @@
         <ListBox x:Name="lst_Folder" Margin="10,75,10,10" SelectionChanged="lst_Folder_SelectionChanged"/>
         <ListBox x:Name="lst_File" Grid.Column="1" Margin="10,75,10,10" Grid.ColumnSpan="2"/>
         <sdk:Label Content=" &quot;.&quot; 表示本目录;&#x0d;有多少个 &quot;/&quot; 表示多少级子目录,没有则表示本目录下的文件夹" Height="32" Margin="10,38,10,0" VerticalAlignment="Top" BorderBrush="Black"/>
-        <ComboBox x:Name="ddlst_Extension" Grid.Column="1" Margin="65,50,10,0" VerticalAlignment="Top" SelectionChanged="ddlst_Extension_SelectionChanged" Height="20"/>
+        <ComboBox x:Name="ddlst_Extension" Grid.Column="1" Margin="65,50,10,0" VerticalAlignment="Top" SelectionChanged="ddlst_Extension_SelectionChanged" Height="20" IsEnabled="False"/>
         <sdk:Label Content="选择后缀" Grid.Column="1" HorizontalAlignment="Left" Margin="10,54,0,0" VerticalAlignment="Top" Width="55" Height="16"/>
-        <TextBox x:Name="txt_Search" Grid.Column="2" Height="23" Margin="10,47,92,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" KeyDown="txt_Search_KeyDown" TextChanged="txt_Search_TextChanged"/>
-        <Button x:Name="btn_Search" Content="搜索" Grid.Column="2" Margin="0,47,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="75" Height="22" Click="btn_Search_Click"/>
+        <TextBox x:Name="txt_Search" Grid.Column="2" Height="23" Margin="10,47,92,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" KeyDown="txt_Search_KeyDown" TextChanged="txt_Search_TextChanged" IsEnabled="False"/>
+        <Button x:Name="btn_Search" Content="搜索" Grid.Column="2" Margin="0,47,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="75" Height="22" Click="btn_Search_Click" IsEnabled="False"/>
     </Grid>
 </UserControl>
