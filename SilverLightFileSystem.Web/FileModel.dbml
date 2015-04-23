@@ -1,9 +1,9 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="filInfo" EntityNamespace="FilesEntities" ContextNamespace="FilesContext" Class="FolderModelDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=(localdb)\Projects;Initial Catalog=filInfo;Integrated Security=True;Connect Timeout=30" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="filInfoConnectionString" Provider="System.Data.SqlClient" />
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="C:\USERS\YESA\APPDATA\LOCAL\MICROSOFT\VISUALSTUDIO\SSDT\FILINFO.MDF" EntityNamespace="FilesEntities" ContextNamespace="FilesContext" Class="FolderModelDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=(LocalDB)\v11.0;Initial Catalog=C:\USERS\YESA\APPDATA\LOCAL\MICROSOFT\VISUALSTUDIO\SSDT\FILINFO.MDF;Integrated Security=True;Connect Timeout=30" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="C__USERS_YESA_APPDATA_LOCAL_MICROSOFT_VISUALSTUDIO_SSDT_FILINFO_MDFConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.[Table]" Member="Files">
     <Type Name="Files">
       <Column Name="pkid" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="PID" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Name" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
       <Column Name="Size" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />

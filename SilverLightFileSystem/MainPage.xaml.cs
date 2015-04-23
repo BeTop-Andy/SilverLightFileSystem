@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+
 using SilverLightFileSystem.FileInfoWCFServiceReference;
 
 namespace SilverLightFileSystem
@@ -28,10 +29,28 @@ namespace SilverLightFileSystem
 			lst_Folder.ItemsSource = folders;
 
 			webClient = new FileInfoWCFServiceClient();
+
+			webClient.Check_HasIdCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(InitCompleted);
+			webClient.Check_HasIdAsync();
+
 		}
+
+
+		private void InitCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+		{
+			webClient.GetStartIdCompleted += new EventHandler<GetStartIdCompletedEventArgs>(GetStartId);
+			webClient.GetStartIdAsync();
+		}
+
+		private void GetStartId(object sender, GetStartIdCompletedEventArgs e)
+		{
+			id = e.Result + 1;
+		}
+
 
 		private void btn_Browse_Click(object sender, RoutedEventArgs e)
 		{
+			//MessageBox.Show(id.ToString());
 			lst_File.Items.Clear();
 			folders.Clear();
 			txt_PathTextBox.Text = "";
@@ -53,7 +72,7 @@ namespace SilverLightFileSystem
 
 				GetAllDir(ofd.File.Directory, 0);
 				AddFileToDB(ofd.File.Directory, null);
-				AddDirToDB(ofd.File.Directory,null);
+				AddDirToDB(ofd.File.Directory, null);
 
 				IEnumerable<FileInfo> files = ofd.File.Directory.EnumerateFiles();
 
@@ -64,7 +83,8 @@ namespace SilverLightFileSystem
 					lst_File.Items.Add(i.Name);
 				}
 
-
+				id++;		//为了分隔开
+				webClient.SetStartIdAsync(id);
 			}
 			else
 			{
@@ -123,10 +143,9 @@ namespace SilverLightFileSystem
 
 			foreach (DirectoryInfo di in dirs)
 			{
-				folders.Add(new Folder(str,di));
+				folders.Add(new Folder(str, di));
 				GetAllDir(di, level + 1);
 			}
-
 		}
 
 		private void AddDirToDB(DirectoryInfo dir, int? pid)
@@ -135,9 +154,11 @@ namespace SilverLightFileSystem
 
 			foreach (DirectoryInfo di in dirs)
 			{
-				webClient.AddDirToDBAsync(id, pid, di.Name, di.CreationTime);
+				webClient.AddDirToDBAsync(id, pid, di.Name, GetDirSize(di), di.CreationTime);
+
 				int tmp_id = id;
 				id++;
+
 				AddFileToDB(di, tmp_id);
 				AddDirToDB(di, tmp_id);
 			}
@@ -172,9 +193,23 @@ namespace SilverLightFileSystem
 			}
 		}
 
-		private void test(object sender, TestCompletedEventArgs e)
+		private long GetDirSize(DirectoryInfo dir)
 		{
-			MessageBox.Show(e.Result.ToString());
+			long size = 0;
+
+			IEnumerable<FileInfo> files = dir.EnumerateFiles();
+			foreach (var file in files)
+			{
+				size += file.Length;
+			}
+
+			IEnumerable<DirectoryInfo> dirs = dir.EnumerateDirectories();
+			foreach (var di in dirs)
+			{
+				size += GetDirSize(di);
+			}
+
+			return size;
 		}
 
 	}

@@ -47,7 +47,7 @@ namespace SilverLightFileSystem.Web
 		}
 
 		[OperationContract]
-		public void AddDirToDB(int id, int? pid, string dirName, DateTime createTime)
+		public void AddDirToDB(int id, int? pid, string dirName, long size, DateTime createTime)
 		{
 			FolderModelDataContext dc = new FolderModelDataContext();
 
@@ -56,12 +56,70 @@ namespace SilverLightFileSystem.Web
 				Id = id,
 				PID = pid,
 				Name = dirName,
-				Size = 0,
+				Size = size,
 				CreateTime = createTime,
 				Type = "dir"
 			});
 
 			dc.SubmitChanges();
+		}
+
+		[OperationContract]
+		public int GetStartId()
+		{
+			FolderModelDataContext dc = new FolderModelDataContext();
+
+			var id = dc.Files.SingleOrDefault<Files>(i => i.Type=="id");
+
+			if (id == null)
+			{
+				return -100;
+			}
+
+			return id.Id;
+		}
+
+		[OperationContract]
+		public void SetStartId(int newId)
+		{
+			FolderModelDataContext dc = new FolderModelDataContext();
+
+			var id = dc.Files.SingleOrDefault<Files>(i => i.Type == "id");
+
+			if (id == null)
+			{
+				return;
+			}
+
+			id.Id = newId;
+
+			dc.SubmitChanges();
+		}
+
+		/// <summary>
+		/// 检查是否有ID这一行，没有的话就插入
+		/// </summary>
+		[OperationContract]
+		public void Check_HasId()
+		{
+			FolderModelDataContext dc = new FolderModelDataContext();
+
+			var id = dc.Files.SingleOrDefault<Files>(i => i.Type == "id");
+
+			if (id == null)
+			{
+				dc.Files.InsertOnSubmit(new Files
+				{
+					Id = 0,
+					PID = null,
+					Name = "id",
+					Size = 0,
+					CreateTime = DateTime.Now,
+					Type = "id"
+				});
+
+				dc.SubmitChanges();
+			}
 		}
 	}
 }

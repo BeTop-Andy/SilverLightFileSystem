@@ -34,9 +34,24 @@ namespace SilverLightFileSystem.FileInfoWCFServiceReference {
         void EndAddFileToDB(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="urn:FileInfoWCFService/AddDirToDB", ReplyAction="urn:FileInfoWCFService/AddDirToDBResponse")]
-        System.IAsyncResult BeginAddDirToDB(int id, System.Nullable<int> pid, string dirName, System.DateTime createTime, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginAddDirToDB(int id, System.Nullable<int> pid, string dirName, long size, System.DateTime createTime, System.AsyncCallback callback, object asyncState);
         
         void EndAddDirToDB(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="urn:FileInfoWCFService/GetStartId", ReplyAction="urn:FileInfoWCFService/GetStartIdResponse")]
+        System.IAsyncResult BeginGetStartId(System.AsyncCallback callback, object asyncState);
+        
+        int EndGetStartId(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="urn:FileInfoWCFService/SetStartId", ReplyAction="urn:FileInfoWCFService/SetStartIdResponse")]
+        System.IAsyncResult BeginSetStartId(int newId, System.AsyncCallback callback, object asyncState);
+        
+        void EndSetStartId(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="urn:FileInfoWCFService/Check_HasId", ReplyAction="urn:FileInfoWCFService/Check_HasIdResponse")]
+        System.IAsyncResult BeginCheck_HasId(System.AsyncCallback callback, object asyncState);
+        
+        void EndCheck_HasId(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -50,6 +65,25 @@ namespace SilverLightFileSystem.FileInfoWCFServiceReference {
         private object[] results;
         
         public TestCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public int Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((int)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class GetStartIdCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public GetStartIdCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
@@ -89,6 +123,24 @@ namespace SilverLightFileSystem.FileInfoWCFServiceReference {
         private EndOperationDelegate onEndAddDirToDBDelegate;
         
         private System.Threading.SendOrPostCallback onAddDirToDBCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginGetStartIdDelegate;
+        
+        private EndOperationDelegate onEndGetStartIdDelegate;
+        
+        private System.Threading.SendOrPostCallback onGetStartIdCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginSetStartIdDelegate;
+        
+        private EndOperationDelegate onEndSetStartIdDelegate;
+        
+        private System.Threading.SendOrPostCallback onSetStartIdCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginCheck_HasIdDelegate;
+        
+        private EndOperationDelegate onEndCheck_HasIdDelegate;
+        
+        private System.Threading.SendOrPostCallback onCheck_HasIdCompletedDelegate;
         
         private BeginOperationDelegate onBeginOpenDelegate;
         
@@ -149,6 +201,12 @@ namespace SilverLightFileSystem.FileInfoWCFServiceReference {
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> AddFileToDBCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> AddDirToDBCompleted;
+        
+        public event System.EventHandler<GetStartIdCompletedEventArgs> GetStartIdCompleted;
+        
+        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> SetStartIdCompleted;
+        
+        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> Check_HasIdCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -297,8 +355,8 @@ namespace SilverLightFileSystem.FileInfoWCFServiceReference {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult SilverLightFileSystem.FileInfoWCFServiceReference.FileInfoWCFService.BeginAddDirToDB(int id, System.Nullable<int> pid, string dirName, System.DateTime createTime, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginAddDirToDB(id, pid, dirName, createTime, callback, asyncState);
+        System.IAsyncResult SilverLightFileSystem.FileInfoWCFServiceReference.FileInfoWCFService.BeginAddDirToDB(int id, System.Nullable<int> pid, string dirName, long size, System.DateTime createTime, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginAddDirToDB(id, pid, dirName, size, createTime, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -310,8 +368,9 @@ namespace SilverLightFileSystem.FileInfoWCFServiceReference {
             int id = ((int)(inValues[0]));
             System.Nullable<int> pid = ((System.Nullable<int>)(inValues[1]));
             string dirName = ((string)(inValues[2]));
-            System.DateTime createTime = ((System.DateTime)(inValues[3]));
-            return ((SilverLightFileSystem.FileInfoWCFServiceReference.FileInfoWCFService)(this)).BeginAddDirToDB(id, pid, dirName, createTime, callback, asyncState);
+            long size = ((long)(inValues[3]));
+            System.DateTime createTime = ((System.DateTime)(inValues[4]));
+            return ((SilverLightFileSystem.FileInfoWCFServiceReference.FileInfoWCFService)(this)).BeginAddDirToDB(id, pid, dirName, size, createTime, callback, asyncState);
         }
         
         private object[] OnEndAddDirToDB(System.IAsyncResult result) {
@@ -326,11 +385,11 @@ namespace SilverLightFileSystem.FileInfoWCFServiceReference {
             }
         }
         
-        public void AddDirToDBAsync(int id, System.Nullable<int> pid, string dirName, System.DateTime createTime) {
-            this.AddDirToDBAsync(id, pid, dirName, createTime, null);
+        public void AddDirToDBAsync(int id, System.Nullable<int> pid, string dirName, long size, System.DateTime createTime) {
+            this.AddDirToDBAsync(id, pid, dirName, size, createTime, null);
         }
         
-        public void AddDirToDBAsync(int id, System.Nullable<int> pid, string dirName, System.DateTime createTime, object userState) {
+        public void AddDirToDBAsync(int id, System.Nullable<int> pid, string dirName, long size, System.DateTime createTime, object userState) {
             if ((this.onBeginAddDirToDBDelegate == null)) {
                 this.onBeginAddDirToDBDelegate = new BeginOperationDelegate(this.OnBeginAddDirToDB);
             }
@@ -344,7 +403,140 @@ namespace SilverLightFileSystem.FileInfoWCFServiceReference {
                         id,
                         pid,
                         dirName,
+                        size,
                         createTime}, this.onEndAddDirToDBDelegate, this.onAddDirToDBCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult SilverLightFileSystem.FileInfoWCFServiceReference.FileInfoWCFService.BeginGetStartId(System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetStartId(callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        int SilverLightFileSystem.FileInfoWCFServiceReference.FileInfoWCFService.EndGetStartId(System.IAsyncResult result) {
+            return base.Channel.EndGetStartId(result);
+        }
+        
+        private System.IAsyncResult OnBeginGetStartId(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            return ((SilverLightFileSystem.FileInfoWCFServiceReference.FileInfoWCFService)(this)).BeginGetStartId(callback, asyncState);
+        }
+        
+        private object[] OnEndGetStartId(System.IAsyncResult result) {
+            int retVal = ((SilverLightFileSystem.FileInfoWCFServiceReference.FileInfoWCFService)(this)).EndGetStartId(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnGetStartIdCompleted(object state) {
+            if ((this.GetStartIdCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.GetStartIdCompleted(this, new GetStartIdCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void GetStartIdAsync() {
+            this.GetStartIdAsync(null);
+        }
+        
+        public void GetStartIdAsync(object userState) {
+            if ((this.onBeginGetStartIdDelegate == null)) {
+                this.onBeginGetStartIdDelegate = new BeginOperationDelegate(this.OnBeginGetStartId);
+            }
+            if ((this.onEndGetStartIdDelegate == null)) {
+                this.onEndGetStartIdDelegate = new EndOperationDelegate(this.OnEndGetStartId);
+            }
+            if ((this.onGetStartIdCompletedDelegate == null)) {
+                this.onGetStartIdCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetStartIdCompleted);
+            }
+            base.InvokeAsync(this.onBeginGetStartIdDelegate, null, this.onEndGetStartIdDelegate, this.onGetStartIdCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult SilverLightFileSystem.FileInfoWCFServiceReference.FileInfoWCFService.BeginSetStartId(int newId, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginSetStartId(newId, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        void SilverLightFileSystem.FileInfoWCFServiceReference.FileInfoWCFService.EndSetStartId(System.IAsyncResult result) {
+            base.Channel.EndSetStartId(result);
+        }
+        
+        private System.IAsyncResult OnBeginSetStartId(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            int newId = ((int)(inValues[0]));
+            return ((SilverLightFileSystem.FileInfoWCFServiceReference.FileInfoWCFService)(this)).BeginSetStartId(newId, callback, asyncState);
+        }
+        
+        private object[] OnEndSetStartId(System.IAsyncResult result) {
+            ((SilverLightFileSystem.FileInfoWCFServiceReference.FileInfoWCFService)(this)).EndSetStartId(result);
+            return null;
+        }
+        
+        private void OnSetStartIdCompleted(object state) {
+            if ((this.SetStartIdCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.SetStartIdCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void SetStartIdAsync(int newId) {
+            this.SetStartIdAsync(newId, null);
+        }
+        
+        public void SetStartIdAsync(int newId, object userState) {
+            if ((this.onBeginSetStartIdDelegate == null)) {
+                this.onBeginSetStartIdDelegate = new BeginOperationDelegate(this.OnBeginSetStartId);
+            }
+            if ((this.onEndSetStartIdDelegate == null)) {
+                this.onEndSetStartIdDelegate = new EndOperationDelegate(this.OnEndSetStartId);
+            }
+            if ((this.onSetStartIdCompletedDelegate == null)) {
+                this.onSetStartIdCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnSetStartIdCompleted);
+            }
+            base.InvokeAsync(this.onBeginSetStartIdDelegate, new object[] {
+                        newId}, this.onEndSetStartIdDelegate, this.onSetStartIdCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult SilverLightFileSystem.FileInfoWCFServiceReference.FileInfoWCFService.BeginCheck_HasId(System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginCheck_HasId(callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        void SilverLightFileSystem.FileInfoWCFServiceReference.FileInfoWCFService.EndCheck_HasId(System.IAsyncResult result) {
+            base.Channel.EndCheck_HasId(result);
+        }
+        
+        private System.IAsyncResult OnBeginCheck_HasId(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            return ((SilverLightFileSystem.FileInfoWCFServiceReference.FileInfoWCFService)(this)).BeginCheck_HasId(callback, asyncState);
+        }
+        
+        private object[] OnEndCheck_HasId(System.IAsyncResult result) {
+            ((SilverLightFileSystem.FileInfoWCFServiceReference.FileInfoWCFService)(this)).EndCheck_HasId(result);
+            return null;
+        }
+        
+        private void OnCheck_HasIdCompleted(object state) {
+            if ((this.Check_HasIdCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.Check_HasIdCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void Check_HasIdAsync() {
+            this.Check_HasIdAsync(null);
+        }
+        
+        public void Check_HasIdAsync(object userState) {
+            if ((this.onBeginCheck_HasIdDelegate == null)) {
+                this.onBeginCheck_HasIdDelegate = new BeginOperationDelegate(this.OnBeginCheck_HasId);
+            }
+            if ((this.onEndCheck_HasIdDelegate == null)) {
+                this.onEndCheck_HasIdDelegate = new EndOperationDelegate(this.OnEndCheck_HasId);
+            }
+            if ((this.onCheck_HasIdCompletedDelegate == null)) {
+                this.onCheck_HasIdCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnCheck_HasIdCompleted);
+            }
+            base.InvokeAsync(this.onBeginCheck_HasIdDelegate, null, this.onEndCheck_HasIdDelegate, this.onCheck_HasIdCompletedDelegate, userState);
         }
         
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
@@ -463,12 +655,13 @@ namespace SilverLightFileSystem.FileInfoWCFServiceReference {
                 base.EndInvoke("AddFileToDB", _args, result);
             }
             
-            public System.IAsyncResult BeginAddDirToDB(int id, System.Nullable<int> pid, string dirName, System.DateTime createTime, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[4];
+            public System.IAsyncResult BeginAddDirToDB(int id, System.Nullable<int> pid, string dirName, long size, System.DateTime createTime, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[5];
                 _args[0] = id;
                 _args[1] = pid;
                 _args[2] = dirName;
-                _args[3] = createTime;
+                _args[3] = size;
+                _args[4] = createTime;
                 System.IAsyncResult _result = base.BeginInvoke("AddDirToDB", _args, callback, asyncState);
                 return _result;
             }
@@ -476,6 +669,41 @@ namespace SilverLightFileSystem.FileInfoWCFServiceReference {
             public void EndAddDirToDB(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 base.EndInvoke("AddDirToDB", _args, result);
+            }
+            
+            public System.IAsyncResult BeginGetStartId(System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[0];
+                System.IAsyncResult _result = base.BeginInvoke("GetStartId", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public int EndGetStartId(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                int _result = ((int)(base.EndInvoke("GetStartId", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginSetStartId(int newId, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = newId;
+                System.IAsyncResult _result = base.BeginInvoke("SetStartId", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public void EndSetStartId(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                base.EndInvoke("SetStartId", _args, result);
+            }
+            
+            public System.IAsyncResult BeginCheck_HasId(System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[0];
+                System.IAsyncResult _result = base.BeginInvoke("Check_HasId", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public void EndCheck_HasId(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                base.EndInvoke("Check_HasId", _args, result);
             }
         }
     }

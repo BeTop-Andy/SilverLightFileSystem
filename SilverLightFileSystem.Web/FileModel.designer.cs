@@ -20,7 +20,7 @@ namespace FilesContext
 	using System.Linq.Expressions;
 	
 	
-	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="filInfo")]
+	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="C:\\USERS\\YESA\\APPDATA\\LOCAL\\MICROSOFT\\VISUALSTUDIO\\SSDT\\FILINFO.MDF")]
 	public partial class FolderModelDataContext : System.Data.Linq.DataContext
 	{
 		
@@ -34,7 +34,8 @@ namespace FilesContext
     #endregion
 		
 		public FolderModelDataContext() : 
-				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["filInfoConnectionString"].ConnectionString, mappingSource)
+				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["C__USERS_YESA_APPDATA_LOCAL_MICROSOFT_VISUALSTUDIO_SSDT_FILINFO_MDFConnectionStri" +
+						"ng"].ConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
@@ -88,7 +89,7 @@ namespace FilesEntities
 		
 		private int _pkid;
 		
-		private System.Nullable<int> _Id;
+		private int _Id;
 		
 		private System.Nullable<int> _PID;
 		
@@ -106,7 +107,7 @@ namespace FilesEntities
     partial void OnCreated();
     partial void OnpkidChanging(int value);
     partial void OnpkidChanged();
-    partial void OnIdChanging(System.Nullable<int> value);
+    partial void OnIdChanging(int value);
     partial void OnIdChanged();
     partial void OnPIDChanging(System.Nullable<int> value);
     partial void OnPIDChanged();
@@ -145,8 +146,8 @@ namespace FilesEntities
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="Int")]
-		public System.Nullable<int> Id
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="Int NOT NULL")]
+		public int Id
 		{
 			get
 			{
