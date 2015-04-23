@@ -52,8 +52,8 @@ namespace SilverLightFileSystem
 				folders.Add(new Folder(".", ofd.File.Directory));
 
 				GetAllDir(ofd.File.Directory, 0);
+				AddFileToDB(ofd.File.Directory, null);
 				AddDirToDB(ofd.File.Directory,null);
-
 
 				IEnumerable<FileInfo> files = ofd.File.Directory.EnumerateFiles();
 
@@ -64,7 +64,6 @@ namespace SilverLightFileSystem
 					lst_File.Items.Add(i.Name);
 				}
 
-				//webClient.TestCompleted += new EventHandler<TestCompletedEventArgs>(test);
 
 			}
 			else
@@ -126,7 +125,6 @@ namespace SilverLightFileSystem
 			{
 				folders.Add(new Folder(str,di));
 				GetAllDir(di, level + 1);
-				//webClient.AddDirToDBAsync(id, pid, di.Name, di.CreationTime);
 			}
 
 		}
@@ -138,9 +136,21 @@ namespace SilverLightFileSystem
 			foreach (DirectoryInfo di in dirs)
 			{
 				webClient.AddDirToDBAsync(id, pid, di.Name, di.CreationTime);
-				int tmp_pid = id;
+				int tmp_id = id;
 				id++;
-				AddDirToDB(di, tmp_pid);
+				AddFileToDB(di, tmp_id);
+				AddDirToDB(di, tmp_id);
+			}
+		}
+
+		private void AddFileToDB(DirectoryInfo dir, int? pid)
+		{
+			IEnumerable<FileInfo> files = dir.EnumerateFiles();
+
+			foreach (FileInfo fi in files)
+			{
+				webClient.AddFileToDBAsync(id, pid, fi.Name, fi.Length, fi.CreationTime);
+				id++;
 			}
 		}
 
