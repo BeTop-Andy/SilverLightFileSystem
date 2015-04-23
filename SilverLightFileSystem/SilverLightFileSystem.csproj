@@ -109,6 +109,7 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <None Include="Properties\OutOfBrowserSettings.xml" />
     <Content Include="ServiceReferences.ClientConfig" />
     <None Include="Service References\FileInfoWCFServiceReference\FileInfoWCFService.wsdl" />
     <None Include="Service References\FileInfoWCFServiceReference\FileInfoWCFService.xsd">
