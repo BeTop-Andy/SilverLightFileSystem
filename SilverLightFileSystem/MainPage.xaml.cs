@@ -19,7 +19,7 @@ namespace SilverLightFileSystem
 	{
 		ObservableCollection<Folder> folders;
 		FileInfoWCFServiceClient webClient;
-		int id = 100;
+		int id = 1;
 
 		public MainPage()
 		{
@@ -126,6 +126,7 @@ namespace SilverLightFileSystem
 			{
 				folders.Add(new Folder(str,di));
 				GetAllDir(di, level + 1);
+				//webClient.AddDirToDBAsync(id, pid, di.Name, di.CreationTime);
 			}
 
 		}
@@ -137,7 +138,9 @@ namespace SilverLightFileSystem
 			foreach (DirectoryInfo di in dirs)
 			{
 				webClient.AddDirToDBAsync(id, pid, di.Name, di.CreationTime);
-				AddDirToDB(di, id);
+				int tmp_pid = id;
+				id++;
+				AddDirToDB(di, tmp_pid);
 			}
 		}
 
