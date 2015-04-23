@@ -18,16 +18,6 @@ namespace SilverLightFileSystem.FileInfoWCFServiceReference {
     [System.ServiceModel.ServiceContractAttribute(Namespace="", ConfigurationName="FileInfoWCFServiceReference.FileInfoWCFService")]
     public interface FileInfoWCFService {
         
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="urn:FileInfoWCFService/DoWork", ReplyAction="urn:FileInfoWCFService/DoWorkResponse")]
-        System.IAsyncResult BeginDoWork(System.AsyncCallback callback, object asyncState);
-        
-        void EndDoWork(System.IAsyncResult result);
-        
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="urn:FileInfoWCFService/Test", ReplyAction="urn:FileInfoWCFService/TestResponse")]
-        System.IAsyncResult BeginTest(System.IO.FileInfo fi, System.AsyncCallback callback, object asyncState);
-        
-        int EndTest(System.IAsyncResult result);
-        
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="urn:FileInfoWCFService/AddFileToDB", ReplyAction="urn:FileInfoWCFService/AddFileToDBResponse")]
         System.IAsyncResult BeginAddFileToDB(int id, System.Nullable<int> pid, string fileName, long size, System.DateTime createTime, string ext, System.AsyncCallback callback, object asyncState);
         
@@ -55,25 +45,6 @@ namespace SilverLightFileSystem.FileInfoWCFServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class TestCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        public TestCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        public int Result {
-            get {
-                base.RaiseExceptionIfNecessary();
-                return ((int)(this.results[0]));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class GetStartIdCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
@@ -94,18 +65,6 @@ namespace SilverLightFileSystem.FileInfoWCFServiceReference {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class FileInfoWCFServiceClient : System.ServiceModel.ClientBase<SilverLightFileSystem.FileInfoWCFServiceReference.FileInfoWCFService>, SilverLightFileSystem.FileInfoWCFServiceReference.FileInfoWCFService {
-        
-        private BeginOperationDelegate onBeginDoWorkDelegate;
-        
-        private EndOperationDelegate onEndDoWorkDelegate;
-        
-        private System.Threading.SendOrPostCallback onDoWorkCompletedDelegate;
-        
-        private BeginOperationDelegate onBeginTestDelegate;
-        
-        private EndOperationDelegate onEndTestDelegate;
-        
-        private System.Threading.SendOrPostCallback onTestCompletedDelegate;
         
         private BeginOperationDelegate onBeginAddFileToDBDelegate;
         
@@ -183,10 +142,6 @@ namespace SilverLightFileSystem.FileInfoWCFServiceReference {
             }
         }
         
-        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> DoWorkCompleted;
-        
-        public event System.EventHandler<TestCompletedEventArgs> TestCompleted;
-        
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> AddFileToDBCompleted;
         
         public event System.EventHandler<GetStartIdCompletedEventArgs> GetStartIdCompleted;
@@ -198,95 +153,6 @@ namespace SilverLightFileSystem.FileInfoWCFServiceReference {
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> CloseCompleted;
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult SilverLightFileSystem.FileInfoWCFServiceReference.FileInfoWCFService.BeginDoWork(System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginDoWork(callback, asyncState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        void SilverLightFileSystem.FileInfoWCFServiceReference.FileInfoWCFService.EndDoWork(System.IAsyncResult result) {
-            base.Channel.EndDoWork(result);
-        }
-        
-        private System.IAsyncResult OnBeginDoWork(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            return ((SilverLightFileSystem.FileInfoWCFServiceReference.FileInfoWCFService)(this)).BeginDoWork(callback, asyncState);
-        }
-        
-        private object[] OnEndDoWork(System.IAsyncResult result) {
-            ((SilverLightFileSystem.FileInfoWCFServiceReference.FileInfoWCFService)(this)).EndDoWork(result);
-            return null;
-        }
-        
-        private void OnDoWorkCompleted(object state) {
-            if ((this.DoWorkCompleted != null)) {
-                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.DoWorkCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
-            }
-        }
-        
-        public void DoWorkAsync() {
-            this.DoWorkAsync(null);
-        }
-        
-        public void DoWorkAsync(object userState) {
-            if ((this.onBeginDoWorkDelegate == null)) {
-                this.onBeginDoWorkDelegate = new BeginOperationDelegate(this.OnBeginDoWork);
-            }
-            if ((this.onEndDoWorkDelegate == null)) {
-                this.onEndDoWorkDelegate = new EndOperationDelegate(this.OnEndDoWork);
-            }
-            if ((this.onDoWorkCompletedDelegate == null)) {
-                this.onDoWorkCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnDoWorkCompleted);
-            }
-            base.InvokeAsync(this.onBeginDoWorkDelegate, null, this.onEndDoWorkDelegate, this.onDoWorkCompletedDelegate, userState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult SilverLightFileSystem.FileInfoWCFServiceReference.FileInfoWCFService.BeginTest(System.IO.FileInfo fi, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginTest(fi, callback, asyncState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        int SilverLightFileSystem.FileInfoWCFServiceReference.FileInfoWCFService.EndTest(System.IAsyncResult result) {
-            return base.Channel.EndTest(result);
-        }
-        
-        private System.IAsyncResult OnBeginTest(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            System.IO.FileInfo fi = ((System.IO.FileInfo)(inValues[0]));
-            return ((SilverLightFileSystem.FileInfoWCFServiceReference.FileInfoWCFService)(this)).BeginTest(fi, callback, asyncState);
-        }
-        
-        private object[] OnEndTest(System.IAsyncResult result) {
-            int retVal = ((SilverLightFileSystem.FileInfoWCFServiceReference.FileInfoWCFService)(this)).EndTest(result);
-            return new object[] {
-                    retVal};
-        }
-        
-        private void OnTestCompleted(object state) {
-            if ((this.TestCompleted != null)) {
-                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.TestCompleted(this, new TestCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
-            }
-        }
-        
-        public void TestAsync(System.IO.FileInfo fi) {
-            this.TestAsync(fi, null);
-        }
-        
-        public void TestAsync(System.IO.FileInfo fi, object userState) {
-            if ((this.onBeginTestDelegate == null)) {
-                this.onBeginTestDelegate = new BeginOperationDelegate(this.OnBeginTest);
-            }
-            if ((this.onEndTestDelegate == null)) {
-                this.onEndTestDelegate = new EndOperationDelegate(this.OnEndTest);
-            }
-            if ((this.onTestCompletedDelegate == null)) {
-                this.onTestCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnTestCompleted);
-            }
-            base.InvokeAsync(this.onBeginTestDelegate, new object[] {
-                        fi}, this.onEndTestDelegate, this.onTestCompletedDelegate, userState);
-        }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         System.IAsyncResult SilverLightFileSystem.FileInfoWCFServiceReference.FileInfoWCFService.BeginAddFileToDB(int id, System.Nullable<int> pid, string fileName, long size, System.DateTime createTime, string ext, System.AsyncCallback callback, object asyncState) {
@@ -549,30 +415,6 @@ namespace SilverLightFileSystem.FileInfoWCFServiceReference {
             
             public FileInfoWCFServiceClientChannel(System.ServiceModel.ClientBase<SilverLightFileSystem.FileInfoWCFServiceReference.FileInfoWCFService> client) : 
                     base(client) {
-            }
-            
-            public System.IAsyncResult BeginDoWork(System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[0];
-                System.IAsyncResult _result = base.BeginInvoke("DoWork", _args, callback, asyncState);
-                return _result;
-            }
-            
-            public void EndDoWork(System.IAsyncResult result) {
-                object[] _args = new object[0];
-                base.EndInvoke("DoWork", _args, result);
-            }
-            
-            public System.IAsyncResult BeginTest(System.IO.FileInfo fi, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[1];
-                _args[0] = fi;
-                System.IAsyncResult _result = base.BeginInvoke("Test", _args, callback, asyncState);
-                return _result;
-            }
-            
-            public int EndTest(System.IAsyncResult result) {
-                object[] _args = new object[0];
-                int _result = ((int)(base.EndInvoke("Test", _args, result)));
-                return _result;
             }
             
             public System.IAsyncResult BeginAddFileToDB(int id, System.Nullable<int> pid, string fileName, long size, System.DateTime createTime, string ext, System.AsyncCallback callback, object asyncState) {

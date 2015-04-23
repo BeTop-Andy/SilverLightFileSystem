@@ -4,21 +4,8 @@
     <xsd:schema targetNamespace="/Imports">
       <xsd:import schemaLocation="http://localhost:58068/FileInfoWCFService.svc?xsd=xsd0" />
       <xsd:import schemaLocation="http://localhost:58068/FileInfoWCFService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import schemaLocation="http://localhost:58068/FileInfoWCFService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/System.IO" />
     </xsd:schema>
   </wsdl:types>
-  <wsdl:message name="FileInfoWCFService_DoWork_InputMessage">
-    <wsdl:part name="parameters" element="DoWork" />
-  </wsdl:message>
-  <wsdl:message name="FileInfoWCFService_DoWork_OutputMessage">
-    <wsdl:part name="parameters" element="DoWorkResponse" />
-  </wsdl:message>
-  <wsdl:message name="FileInfoWCFService_Test_InputMessage">
-    <wsdl:part name="parameters" element="Test" />
-  </wsdl:message>
-  <wsdl:message name="FileInfoWCFService_Test_OutputMessage">
-    <wsdl:part name="parameters" element="TestResponse" />
-  </wsdl:message>
   <wsdl:message name="FileInfoWCFService_AddFileToDB_InputMessage">
     <wsdl:part name="parameters" element="AddFileToDB" />
   </wsdl:message>
@@ -44,14 +31,6 @@
     <wsdl:part name="parameters" element="Check_HasIdResponse" />
   </wsdl:message>
   <wsdl:portType name="FileInfoWCFService">
-    <wsdl:operation name="DoWork">
-      <wsdl:input wsaw:Action="urn:FileInfoWCFService/DoWork" message="FileInfoWCFService_DoWork_InputMessage" />
-      <wsdl:output wsaw:Action="urn:FileInfoWCFService/DoWorkResponse" message="FileInfoWCFService_DoWork_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="Test">
-      <wsdl:input wsaw:Action="urn:FileInfoWCFService/Test" message="FileInfoWCFService_Test_InputMessage" />
-      <wsdl:output wsaw:Action="urn:FileInfoWCFService/TestResponse" message="FileInfoWCFService_Test_OutputMessage" />
-    </wsdl:operation>
     <wsdl:operation name="AddFileToDB">
       <wsdl:input wsaw:Action="urn:FileInfoWCFService/AddFileToDB" message="FileInfoWCFService_AddFileToDB_InputMessage" />
       <wsdl:output wsaw:Action="urn:FileInfoWCFService/AddFileToDBResponse" message="FileInfoWCFService_AddFileToDB_OutputMessage" />

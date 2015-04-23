@@ -13,24 +13,6 @@
   <wsdl:binding name="CustomBinding_FileInfoWCFService" type="FileInfoWCFService">
     <wsp:PolicyReference URI="#CustomBinding_FileInfoWCFService_policy" />
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="DoWork">
-      <soap12:operation soapAction="urn:FileInfoWCFService/DoWork" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="Test">
-      <soap12:operation soapAction="urn:FileInfoWCFService/Test" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="AddFileToDB">
       <soap12:operation soapAction="urn:FileInfoWCFService/AddFileToDB" style="document" />
       <wsdl:input>

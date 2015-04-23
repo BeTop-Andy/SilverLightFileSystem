@@ -12,11 +12,11 @@ namespace SilverLightFileSystem
 {
 	public partial class MainPage : UserControl
 	{
-		ObservableCollection<Folder> folders;
-		FileInfoWCFServiceClient webClient;
-		ObservableCollection<string> extensions;
+		ObservableCollection<Folder> folders;			//文件夹的相关信息
+		FileInfoWCFServiceClient webClient;				//调用数据库的“引用”
+		ObservableCollection<string> extensions;		//后缀名的集合
 
-		int id = -100;
+		int id = -100;									//数据库中的Id
 
 		public MainPage()
 		{
@@ -97,7 +97,6 @@ namespace SilverLightFileSystem
 
 		private void SetEnabled(bool b)
 		{
-
 			txt_Search.IsEnabled = b;
 			btn_Search.IsEnabled = b;
 			ddlst_Extension.IsEnabled = b;
@@ -142,6 +141,11 @@ namespace SilverLightFileSystem
 		}
 		*/
 
+		/// <summary>
+		/// 获取dir目录下的所有子目录，并加入folders集合
+		/// </summary>
+		/// <param name="dir">“根”目录</param>
+		/// <param name="level">深度</param>
 		private void GetAllDir(DirectoryInfo dir, int level)
 		{
 			IEnumerable<DirectoryInfo> dirs = dir.EnumerateDirectories();
@@ -159,6 +163,11 @@ namespace SilverLightFileSystem
 			}
 		}
 
+		/// <summary>
+		/// 获取dir目录下的所有子目录，并加入数据库
+		/// </summary>
+		/// <param name="dir">“根”目录</param>
+		/// <param name="pid">父节点的Id</param>
 		private void AddDirToDB(DirectoryInfo dir, int? pid)
 		{
 			IEnumerable<DirectoryInfo> dirs = dir.EnumerateDirectories();
@@ -175,6 +184,11 @@ namespace SilverLightFileSystem
 			}
 		}
 
+		/// <summary>
+		/// 获取dir目录下的所有文件，并加入数据库
+		/// </summary>
+		/// <param name="dir">“根”目录</param>
+		/// <param name="pid">父节点的Id</param>
 		private void AddFileToDB(DirectoryInfo dir, int? pid)
 		{
 			IEnumerable<FileInfo> files = dir.EnumerateFiles();
@@ -199,6 +213,7 @@ namespace SilverLightFileSystem
 				lst_File.Items.Clear();
 				extensions.Clear();
 				extensions.Add("ALL");
+
 				foreach (FileInfo i in files)
 				{
 					lst_File.Items.Add(i.Name);
@@ -209,7 +224,12 @@ namespace SilverLightFileSystem
 				}
 			}
 		}
-
+		
+		/// <summary>
+		/// 计算dir目录下（包括子目录）的所有文件的总大小
+		/// </summary>
+		/// <param name="dir"></param>
+		/// <returns>大小</returns>
 		private long GetDirSize(DirectoryInfo dir)
 		{
 			long size = 0;
@@ -235,6 +255,7 @@ namespace SilverLightFileSystem
 			IEnumerable<FileInfo> files = dir.EnumerateFiles();
 			lst_File.Items.Clear();
 
+			//选择“ALL”
 			if (ddlst_Extension.SelectedIndex == 0)
 			{
 				foreach (var i in files)
@@ -259,7 +280,7 @@ namespace SilverLightFileSystem
 
 		private void btn_Search_Click(object sender, RoutedEventArgs e)
 		{
-			string keyword = txt_Search.Text.ToLower();
+			string keyword = txt_Search.Text.ToLower();		//忽略大小写
 			if (keyword != null)
 			{
 				DirectoryInfo dir = folders[lst_Folder.SelectedIndex < 0 ? 0 : lst_Folder.SelectedIndex].DirInfo;
