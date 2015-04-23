@@ -12,11 +12,11 @@ namespace SilverLightFileSystem
 {
 	public partial class MainPage : UserControl
 	{
-		ObservableCollection<Folder> folders;			//文件夹的相关信息
-		FileInfoWCFServiceClient webClient;				//调用数据库的“引用”
-		ObservableCollection<string> extensions;		//后缀名的集合
+		ObservableCollection<Folder> folders;			// 文件夹的相关信息
+		FileInfoWCFServiceClient webClient;				// 调用数据库的“引用”
+		ObservableCollection<string> extensions;		// 后缀名的集合
 
-		int id = 0;										//数据库中的Id
+		int id = 0;										// 数据库中的Id
 
 		public MainPage()
 		{
@@ -26,7 +26,8 @@ namespace SilverLightFileSystem
 
 			webClient = new FileInfoWCFServiceClient();
 
-			webClient.Check_HasIdCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(InitCompleted);
+			webClient.Check_HasIdCompleted += new 
+				EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(InitCompleted);
 			webClient.Check_HasIdAsync();
 
 			extensions = new ObservableCollection<string>();
@@ -37,7 +38,8 @@ namespace SilverLightFileSystem
 
 		private void InitCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
 		{
-			webClient.GetStartIdCompleted += new EventHandler<GetStartIdCompletedEventArgs>(GetStartId);
+			webClient.GetStartIdCompleted += new 
+				EventHandler<GetStartIdCompletedEventArgs>(GetStartId);
 			webClient.GetStartIdAsync();
 		}
 
@@ -84,7 +86,7 @@ namespace SilverLightFileSystem
 					}
 				}
 
-				id++;		//为了分隔开
+				id++;		// 为了分隔开
 				webClient.SetStartIdAsync(id);
 				SetEnabled(true);
 			}
@@ -174,7 +176,8 @@ namespace SilverLightFileSystem
 
 			foreach (DirectoryInfo di in dirs)
 			{
-				webClient.AddFileToDBAsync(id, pid, di.Name, GetDirSize(di), di.CreationTime, "dir");
+				webClient.AddFileToDBAsync(id, pid, di.Name, GetDirSize(di), 
+										   di.CreationTime, "dir");
 
 				int tmp_id = id;
 				id++;
@@ -195,7 +198,8 @@ namespace SilverLightFileSystem
 
 			foreach (FileInfo fi in files)
 			{
-				webClient.AddFileToDBAsync(id, pid, fi.Name, fi.Length, fi.CreationTime, fi.Extension);
+				webClient.AddFileToDBAsync(id, pid, fi.Name, fi.Length, 
+										   fi.CreationTime, fi.Extension);
 				id++;
 			}
 		}
@@ -251,11 +255,12 @@ namespace SilverLightFileSystem
 
 		private void ddlst_Extension_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			DirectoryInfo dir = folders[lst_Folder.SelectedIndex < 0 ? 0 : lst_Folder.SelectedIndex].DirInfo;
+			DirectoryInfo dir = folders[lst_Folder.SelectedIndex < 0 ?
+				0 : lst_Folder.SelectedIndex].DirInfo;
 			IEnumerable<FileInfo> files = dir.EnumerateFiles();
 			lst_File.Items.Clear();
 
-			//选择“ALL”
+			// 选择“ALL”
 			if (ddlst_Extension.SelectedIndex == 0)
 			{
 				foreach (var i in files)
@@ -280,10 +285,11 @@ namespace SilverLightFileSystem
 
 		private void btn_Search_Click(object sender, RoutedEventArgs e)
 		{
-			string keyword = txt_Search.Text.ToLower();		//忽略大小写
+			string keyword = txt_Search.Text.ToLower();		// 忽略大小写
 			if (keyword != null)
 			{
-				DirectoryInfo dir = folders[lst_Folder.SelectedIndex < 0 ? 0 : lst_Folder.SelectedIndex].DirInfo;
+				DirectoryInfo dir = folders[lst_Folder.SelectedIndex < 0 ? 
+					0 : lst_Folder.SelectedIndex].DirInfo;
 				IEnumerable<FileInfo> files = dir.EnumerateFiles();
 				lst_File.Items.Clear();
 
