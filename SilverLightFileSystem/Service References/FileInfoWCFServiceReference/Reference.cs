@@ -29,14 +29,9 @@ namespace SilverLightFileSystem.FileInfoWCFServiceReference {
         int EndTest(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="urn:FileInfoWCFService/AddFileToDB", ReplyAction="urn:FileInfoWCFService/AddFileToDBResponse")]
-        System.IAsyncResult BeginAddFileToDB(int id, System.Nullable<int> pid, string fileName, long size, System.DateTime createTime, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginAddFileToDB(int id, System.Nullable<int> pid, string fileName, long size, System.DateTime createTime, string ext, System.AsyncCallback callback, object asyncState);
         
         void EndAddFileToDB(System.IAsyncResult result);
-        
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="urn:FileInfoWCFService/AddDirToDB", ReplyAction="urn:FileInfoWCFService/AddDirToDBResponse")]
-        System.IAsyncResult BeginAddDirToDB(int id, System.Nullable<int> pid, string dirName, long size, System.DateTime createTime, System.AsyncCallback callback, object asyncState);
-        
-        void EndAddDirToDB(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="urn:FileInfoWCFService/GetStartId", ReplyAction="urn:FileInfoWCFService/GetStartIdResponse")]
         System.IAsyncResult BeginGetStartId(System.AsyncCallback callback, object asyncState);
@@ -118,12 +113,6 @@ namespace SilverLightFileSystem.FileInfoWCFServiceReference {
         
         private System.Threading.SendOrPostCallback onAddFileToDBCompletedDelegate;
         
-        private BeginOperationDelegate onBeginAddDirToDBDelegate;
-        
-        private EndOperationDelegate onEndAddDirToDBDelegate;
-        
-        private System.Threading.SendOrPostCallback onAddDirToDBCompletedDelegate;
-        
         private BeginOperationDelegate onBeginGetStartIdDelegate;
         
         private EndOperationDelegate onEndGetStartIdDelegate;
@@ -199,8 +188,6 @@ namespace SilverLightFileSystem.FileInfoWCFServiceReference {
         public event System.EventHandler<TestCompletedEventArgs> TestCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> AddFileToDBCompleted;
-        
-        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> AddDirToDBCompleted;
         
         public event System.EventHandler<GetStartIdCompletedEventArgs> GetStartIdCompleted;
         
@@ -302,8 +289,8 @@ namespace SilverLightFileSystem.FileInfoWCFServiceReference {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult SilverLightFileSystem.FileInfoWCFServiceReference.FileInfoWCFService.BeginAddFileToDB(int id, System.Nullable<int> pid, string fileName, long size, System.DateTime createTime, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginAddFileToDB(id, pid, fileName, size, createTime, callback, asyncState);
+        System.IAsyncResult SilverLightFileSystem.FileInfoWCFServiceReference.FileInfoWCFService.BeginAddFileToDB(int id, System.Nullable<int> pid, string fileName, long size, System.DateTime createTime, string ext, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginAddFileToDB(id, pid, fileName, size, createTime, ext, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -317,7 +304,8 @@ namespace SilverLightFileSystem.FileInfoWCFServiceReference {
             string fileName = ((string)(inValues[2]));
             long size = ((long)(inValues[3]));
             System.DateTime createTime = ((System.DateTime)(inValues[4]));
-            return ((SilverLightFileSystem.FileInfoWCFServiceReference.FileInfoWCFService)(this)).BeginAddFileToDB(id, pid, fileName, size, createTime, callback, asyncState);
+            string ext = ((string)(inValues[5]));
+            return ((SilverLightFileSystem.FileInfoWCFServiceReference.FileInfoWCFService)(this)).BeginAddFileToDB(id, pid, fileName, size, createTime, ext, callback, asyncState);
         }
         
         private object[] OnEndAddFileToDB(System.IAsyncResult result) {
@@ -332,11 +320,11 @@ namespace SilverLightFileSystem.FileInfoWCFServiceReference {
             }
         }
         
-        public void AddFileToDBAsync(int id, System.Nullable<int> pid, string fileName, long size, System.DateTime createTime) {
-            this.AddFileToDBAsync(id, pid, fileName, size, createTime, null);
+        public void AddFileToDBAsync(int id, System.Nullable<int> pid, string fileName, long size, System.DateTime createTime, string ext) {
+            this.AddFileToDBAsync(id, pid, fileName, size, createTime, ext, null);
         }
         
-        public void AddFileToDBAsync(int id, System.Nullable<int> pid, string fileName, long size, System.DateTime createTime, object userState) {
+        public void AddFileToDBAsync(int id, System.Nullable<int> pid, string fileName, long size, System.DateTime createTime, string ext, object userState) {
             if ((this.onBeginAddFileToDBDelegate == null)) {
                 this.onBeginAddFileToDBDelegate = new BeginOperationDelegate(this.OnBeginAddFileToDB);
             }
@@ -351,60 +339,8 @@ namespace SilverLightFileSystem.FileInfoWCFServiceReference {
                         pid,
                         fileName,
                         size,
-                        createTime}, this.onEndAddFileToDBDelegate, this.onAddFileToDBCompletedDelegate, userState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult SilverLightFileSystem.FileInfoWCFServiceReference.FileInfoWCFService.BeginAddDirToDB(int id, System.Nullable<int> pid, string dirName, long size, System.DateTime createTime, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginAddDirToDB(id, pid, dirName, size, createTime, callback, asyncState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        void SilverLightFileSystem.FileInfoWCFServiceReference.FileInfoWCFService.EndAddDirToDB(System.IAsyncResult result) {
-            base.Channel.EndAddDirToDB(result);
-        }
-        
-        private System.IAsyncResult OnBeginAddDirToDB(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            int id = ((int)(inValues[0]));
-            System.Nullable<int> pid = ((System.Nullable<int>)(inValues[1]));
-            string dirName = ((string)(inValues[2]));
-            long size = ((long)(inValues[3]));
-            System.DateTime createTime = ((System.DateTime)(inValues[4]));
-            return ((SilverLightFileSystem.FileInfoWCFServiceReference.FileInfoWCFService)(this)).BeginAddDirToDB(id, pid, dirName, size, createTime, callback, asyncState);
-        }
-        
-        private object[] OnEndAddDirToDB(System.IAsyncResult result) {
-            ((SilverLightFileSystem.FileInfoWCFServiceReference.FileInfoWCFService)(this)).EndAddDirToDB(result);
-            return null;
-        }
-        
-        private void OnAddDirToDBCompleted(object state) {
-            if ((this.AddDirToDBCompleted != null)) {
-                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.AddDirToDBCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
-            }
-        }
-        
-        public void AddDirToDBAsync(int id, System.Nullable<int> pid, string dirName, long size, System.DateTime createTime) {
-            this.AddDirToDBAsync(id, pid, dirName, size, createTime, null);
-        }
-        
-        public void AddDirToDBAsync(int id, System.Nullable<int> pid, string dirName, long size, System.DateTime createTime, object userState) {
-            if ((this.onBeginAddDirToDBDelegate == null)) {
-                this.onBeginAddDirToDBDelegate = new BeginOperationDelegate(this.OnBeginAddDirToDB);
-            }
-            if ((this.onEndAddDirToDBDelegate == null)) {
-                this.onEndAddDirToDBDelegate = new EndOperationDelegate(this.OnEndAddDirToDB);
-            }
-            if ((this.onAddDirToDBCompletedDelegate == null)) {
-                this.onAddDirToDBCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnAddDirToDBCompleted);
-            }
-            base.InvokeAsync(this.onBeginAddDirToDBDelegate, new object[] {
-                        id,
-                        pid,
-                        dirName,
-                        size,
-                        createTime}, this.onEndAddDirToDBDelegate, this.onAddDirToDBCompletedDelegate, userState);
+                        createTime,
+                        ext}, this.onEndAddFileToDBDelegate, this.onAddFileToDBCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -639,13 +575,14 @@ namespace SilverLightFileSystem.FileInfoWCFServiceReference {
                 return _result;
             }
             
-            public System.IAsyncResult BeginAddFileToDB(int id, System.Nullable<int> pid, string fileName, long size, System.DateTime createTime, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[5];
+            public System.IAsyncResult BeginAddFileToDB(int id, System.Nullable<int> pid, string fileName, long size, System.DateTime createTime, string ext, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[6];
                 _args[0] = id;
                 _args[1] = pid;
                 _args[2] = fileName;
                 _args[3] = size;
                 _args[4] = createTime;
+                _args[5] = ext;
                 System.IAsyncResult _result = base.BeginInvoke("AddFileToDB", _args, callback, asyncState);
                 return _result;
             }
@@ -653,22 +590,6 @@ namespace SilverLightFileSystem.FileInfoWCFServiceReference {
             public void EndAddFileToDB(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 base.EndInvoke("AddFileToDB", _args, result);
-            }
-            
-            public System.IAsyncResult BeginAddDirToDB(int id, System.Nullable<int> pid, string dirName, long size, System.DateTime createTime, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[5];
-                _args[0] = id;
-                _args[1] = pid;
-                _args[2] = dirName;
-                _args[3] = size;
-                _args[4] = createTime;
-                System.IAsyncResult _result = base.BeginInvoke("AddDirToDB", _args, callback, asyncState);
-                return _result;
-            }
-            
-            public void EndAddDirToDB(System.IAsyncResult result) {
-                object[] _args = new object[0];
-                base.EndInvoke("AddDirToDB", _args, result);
             }
             
             public System.IAsyncResult BeginGetStartId(System.AsyncCallback callback, object asyncState) {

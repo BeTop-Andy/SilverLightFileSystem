@@ -40,15 +40,6 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="AddDirToDB">
-      <soap12:operation soapAction="urn:FileInfoWCFService/AddDirToDB" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="GetStartId">
       <soap12:operation soapAction="urn:FileInfoWCFService/GetStartId" style="document" />
       <wsdl:input>

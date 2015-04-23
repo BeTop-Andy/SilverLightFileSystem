@@ -20,6 +20,8 @@ namespace SilverLightFileSystem
 	{
 		ObservableCollection<Folder> folders;
 		FileInfoWCFServiceClient webClient;
+		ObservableCollection<string> extensions;
+
 		int id = -100;
 
 		public MainPage()
@@ -33,6 +35,9 @@ namespace SilverLightFileSystem
 			webClient.Check_HasIdCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(InitCompleted);
 			webClient.Check_HasIdAsync();
 
+			extensions = new ObservableCollection<string>();
+			ddlst_Extension.ItemsSource = extensions;
+			extensions.Add("ALL");
 		}
 
 
@@ -80,6 +85,10 @@ namespace SilverLightFileSystem
 				foreach (FileInfo i in files)
 				{
 					lst_File.Items.Add(i.Name);
+					if (!extensions.Contains(i.Extension))
+					{
+						extensions.Add(i.Extension);
+					}
 				}
 
 				id++;		//为了分隔开
@@ -153,7 +162,7 @@ namespace SilverLightFileSystem
 
 			foreach (DirectoryInfo di in dirs)
 			{
-				webClient.AddDirToDBAsync(id, pid, di.Name, GetDirSize(di), di.CreationTime);
+				webClient.AddFileToDBAsync(id, pid, di.Name, GetDirSize(di), di.CreationTime, "dir");
 
 				int tmp_id = id;
 				id++;
@@ -169,7 +178,7 @@ namespace SilverLightFileSystem
 
 			foreach (FileInfo fi in files)
 			{
-				webClient.AddFileToDBAsync(id, pid, fi.Name, fi.Length, fi.CreationTime);
+				webClient.AddFileToDBAsync(id, pid, fi.Name, fi.Length, fi.CreationTime, fi.Extension);
 				id++;
 			}
 		}
@@ -185,9 +194,15 @@ namespace SilverLightFileSystem
 				IEnumerable<FileInfo> files = di.EnumerateFiles();
 
 				lst_File.Items.Clear();
+				extensions.Clear();
+				extensions.Add("ALL");
 				foreach (FileInfo i in files)
 				{
 					lst_File.Items.Add(i.Name);
+					if (!extensions.Contains(i.Extension))
+					{
+						extensions.Add(i.Extension);
+					}
 				}
 			}
 		}
@@ -211,5 +226,32 @@ namespace SilverLightFileSystem
 			return size;
 		}
 
+		private void ddlst_Extension_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			DirectoryInfo dir = folders[lst_Folder.SelectedIndex].DirInfo;
+			IEnumerable<FileInfo> files = dir.EnumerateFiles();
+			lst_File.Items.Clear();
+
+			if (ddlst_Extension.SelectedIndex == 0)
+			{
+				foreach (var i in files)
+				{
+					lst_File.Items.Add(i.Name);
+				}
+			}
+
+			if (ddlst_Extension.SelectedIndex > 0)
+			{
+				string extension = ddlst_Extension.SelectedValue.ToString();
+
+				foreach (var i in files)
+				{
+					if (i.Extension == extension)
+					{
+						lst_File.Items.Add(i.Name);
+					}
+				}
+			}
+		}
 	}
 }

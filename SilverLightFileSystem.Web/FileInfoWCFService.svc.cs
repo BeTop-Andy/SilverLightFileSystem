@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Activation;
-using System.IO;
 
 using FilesContext;
 using FilesEntities;
@@ -29,7 +31,7 @@ namespace SilverLightFileSystem.Web
 		}
 
 		[OperationContract]
-		public void AddFileToDB(int id,int? pid, string fileName, long size, DateTime createTime)
+		public void AddFileToDB(int id,int? pid, string fileName, long size, DateTime createTime, string ext)
 		{
 			FolderModelDataContext dc = new FolderModelDataContext();
 
@@ -40,25 +42,7 @@ namespace SilverLightFileSystem.Web
 				Name = fileName,
 				Size = size,
 				CreateTime = createTime,
-				Type = "file"
-			});
-
-			dc.SubmitChanges();
-		}
-
-		[OperationContract]
-		public void AddDirToDB(int id, int? pid, string dirName, long size, DateTime createTime)
-		{
-			FolderModelDataContext dc = new FolderModelDataContext();
-
-			dc.Files.InsertOnSubmit(new Files
-			{
-				Id = id,
-				PID = pid,
-				Name = dirName,
-				Size = size,
-				CreateTime = createTime,
-				Type = "dir"
+				Type = ext
 			});
 
 			dc.SubmitChanges();

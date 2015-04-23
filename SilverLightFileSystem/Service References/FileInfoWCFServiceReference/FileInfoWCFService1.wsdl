@@ -25,12 +25,6 @@
   <wsdl:message name="FileInfoWCFService_AddFileToDB_OutputMessage">
     <wsdl:part name="parameters" element="AddFileToDBResponse" />
   </wsdl:message>
-  <wsdl:message name="FileInfoWCFService_AddDirToDB_InputMessage">
-    <wsdl:part name="parameters" element="AddDirToDB" />
-  </wsdl:message>
-  <wsdl:message name="FileInfoWCFService_AddDirToDB_OutputMessage">
-    <wsdl:part name="parameters" element="AddDirToDBResponse" />
-  </wsdl:message>
   <wsdl:message name="FileInfoWCFService_GetStartId_InputMessage">
     <wsdl:part name="parameters" element="GetStartId" />
   </wsdl:message>
@@ -61,10 +55,6 @@
     <wsdl:operation name="AddFileToDB">
       <wsdl:input wsaw:Action="urn:FileInfoWCFService/AddFileToDB" message="FileInfoWCFService_AddFileToDB_InputMessage" />
       <wsdl:output wsaw:Action="urn:FileInfoWCFService/AddFileToDBResponse" message="FileInfoWCFService_AddFileToDB_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="AddDirToDB">
-      <wsdl:input wsaw:Action="urn:FileInfoWCFService/AddDirToDB" message="FileInfoWCFService_AddDirToDB_InputMessage" />
-      <wsdl:output wsaw:Action="urn:FileInfoWCFService/AddDirToDBResponse" message="FileInfoWCFService_AddDirToDB_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetStartId">
       <wsdl:input wsaw:Action="urn:FileInfoWCFService/GetStartId" message="FileInfoWCFService_GetStartId_InputMessage" />
