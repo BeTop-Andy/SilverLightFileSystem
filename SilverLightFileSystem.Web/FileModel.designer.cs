@@ -31,6 +31,9 @@ namespace FilesContext
     partial void InsertFiles(FilesEntities.Files instance);
     partial void UpdateFiles(FilesEntities.Files instance);
     partial void DeleteFiles(FilesEntities.Files instance);
+    partial void InsertIDTable(FilesEntities.IDTable instance);
+    partial void UpdateIDTable(FilesEntities.IDTable instance);
+    partial void DeleteIDTable(FilesEntities.IDTable instance);
     #endregion
 		
 		public FolderModelDataContext() : 
@@ -71,6 +74,14 @@ namespace FilesContext
 				return this.GetTable<FilesEntities.Files>();
 			}
 		}
+		
+		public System.Data.Linq.Table<FilesEntities.IDTable> IDTable
+		{
+			get
+			{
+				return this.GetTable<FilesEntities.IDTable>();
+			}
+		}
 	}
 }
 namespace FilesEntities
@@ -81,7 +92,7 @@ namespace FilesEntities
 	using System;
 	
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.[Table]")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.FileTable")]
 	public partial class Files : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -262,6 +273,92 @@ namespace FilesEntities
 					this._CreateTime = value;
 					this.SendPropertyChanged("CreateTime");
 					this.OnCreateTimeChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.IDTable")]
+	public partial class IDTable : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _StartId;
+		
+		private int _PK;
+		
+    #region 可扩展性方法定义
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnStartIdChanging(int value);
+    partial void OnStartIdChanged();
+    partial void OnPKChanging(int value);
+    partial void OnPKChanged();
+    #endregion
+		
+		public IDTable()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StartId", DbType="Int NOT NULL")]
+		public int StartId
+		{
+			get
+			{
+				return this._StartId;
+			}
+			set
+			{
+				if ((this._StartId != value))
+				{
+					this.OnStartIdChanging(value);
+					this.SendPropertyChanging();
+					this._StartId = value;
+					this.SendPropertyChanged("StartId");
+					this.OnStartIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PK", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int PK
+		{
+			get
+			{
+				return this._PK;
+			}
+			set
+			{
+				if ((this._PK != value))
+				{
+					this.OnPKChanging(value);
+					this.SendPropertyChanging();
+					this._PK = value;
+					this.SendPropertyChanged("PK");
+					this.OnPKChanged();
 				}
 			}
 		}

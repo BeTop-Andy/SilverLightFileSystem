@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="C:\USERS\YESA\APPDATA\LOCAL\MICROSOFT\VISUALSTUDIO\SSDT\FILINFO.MDF" EntityNamespace="FilesEntities" ContextNamespace="FilesContext" Class="FolderModelDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="WebSettings" ConnectionString="Data Source=(LocalDB)\v11.0;Initial Catalog=C:\USERS\YESA\APPDATA\LOCAL\MICROSOFT\VISUALSTUDIO\SSDT\FILINFO.MDF;Integrated Security=True;Connect Timeout=30" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="C__USERS_YESA_APPDATA_LOCAL_MICROSOFT_VISUALSTUDIO_SSDT_FILINFO_MDFConnectionString" Provider="System.Data.SqlClient" />
-  <Table Name="dbo.[Table]" Member="Files">
+  <Table Name="dbo.FileTable" Member="Files">
     <Type Name="Files">
       <Column Name="pkid" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
@@ -9,6 +9,12 @@
       <Column Name="Size" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
       <Column Name="Type" Type="System.String" DbType="NChar(10) NOT NULL" CanBeNull="false" />
       <Column Name="CreateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.IDTable" Member="IDTable">
+    <Type Name="IDTable">
+      <Column Name="StartId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PK" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
     </Type>
   </Table>
 </Database>

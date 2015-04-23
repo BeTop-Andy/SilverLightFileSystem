@@ -69,14 +69,14 @@ namespace SilverLightFileSystem.Web
 		{
 			FolderModelDataContext dc = new FolderModelDataContext();
 
-			var id = dc.Files.SingleOrDefault<Files>(i => i.Type=="id");
+			var id = dc.IDTable.SingleOrDefault();
 
 			if (id == null)
 			{
 				return -100;
 			}
 
-			return id.Id;
+			return id.StartId;
 		}
 
 		[OperationContract]
@@ -84,38 +84,32 @@ namespace SilverLightFileSystem.Web
 		{
 			FolderModelDataContext dc = new FolderModelDataContext();
 
-			var id = dc.Files.SingleOrDefault<Files>(i => i.Type == "id");
+			var id = dc.IDTable.SingleOrDefault();
 
 			if (id == null)
 			{
 				return;
 			}
-
-			id.Id = newId;
-
+			id.StartId = newId;
+			
 			dc.SubmitChanges();
 		}
 
 		/// <summary>
-		/// 检查是否有ID这一行，没有的话就插入
+		/// 检查表中是否有“ID”，没有话插入一行
 		/// </summary>
 		[OperationContract]
 		public void Check_HasId()
 		{
 			FolderModelDataContext dc = new FolderModelDataContext();
 
-			var id = dc.Files.SingleOrDefault<Files>(i => i.Type == "id");
+			var idRow = dc.IDTable.SingleOrDefault();
 
-			if (id == null)
+			if (idRow == null)
 			{
-				dc.Files.InsertOnSubmit(new Files
+				dc.IDTable.InsertOnSubmit(new IDTable
 				{
-					Id = 0,
-					PID = null,
-					Name = "id",
-					Size = 0,
-					CreateTime = DateTime.Now,
-					Type = "id"
+					StartId = 0
 				});
 
 				dc.SubmitChanges();

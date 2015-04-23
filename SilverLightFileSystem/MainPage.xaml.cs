@@ -20,7 +20,7 @@ namespace SilverLightFileSystem
 	{
 		ObservableCollection<Folder> folders;
 		FileInfoWCFServiceClient webClient;
-		int id = 1;
+		int id = -100;
 
 		public MainPage()
 		{
@@ -50,7 +50,6 @@ namespace SilverLightFileSystem
 
 		private void btn_Browse_Click(object sender, RoutedEventArgs e)
 		{
-			//MessageBox.Show(id.ToString());
 			lst_File.Items.Clear();
 			folders.Clear();
 			txt_PathTextBox.Text = "";
