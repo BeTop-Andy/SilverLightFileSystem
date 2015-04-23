@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Activation;
 
@@ -16,20 +13,6 @@ namespace SilverLightFileSystem.Web
 	[AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
 	public class FileInfoWCFService
 	{
-		[OperationContract]
-		public void DoWork()
-		{
-			// 在此处添加操作实现
-			return;
-		}
-
-		// 在此处添加更多操作并使用 [OperationContract] 标记它们
-		[OperationContract]
-		public int Test(FileInfo fi)
-		{
-			return (int) fi.Length;
-		}
-
 		[OperationContract]
 		public void AddFileToDB(int id,int? pid, string fileName, long size, DateTime createTime, string ext)
 		{
